@@ -1,0 +1,150 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000 20000000 
+                       RAM1_ADDR
+                               EQU              0x20000000
+    3 00000000 20000100 
+                       RAM2_ADDR
+                               EQU              0x20000100
+    4 00000000         
+    5 00000000         
+    6 00000000                 AREA             myCode, CODE,READONLY
+    7 00000000                 ENTRY
+    8 00000000                 EXPORT           __main
+    9 00000000         
+   10 00000000         __main
+   11 00000000 F000 F803       BL               FILL
+   12 00000004 F000 F80C       BL               COPY
+   13 00000008         
+   14 00000008 E7FE    Stop    B                Stop
+   15 0000000A         
+   16 0000000A         
+   17 0000000A         
+   18 0000000A F04F 5100 
+                       FILL    LDR              R1,= RAM1_ADDR
+   19 0000000E F04F 000A       MOV              R0,#10
+   20 00000012 4A0A            LDR              R2,=0xDEADBEEF
+   21 00000014         
+   22 00000014 600A    L1      STR              R2,[R1]
+   23 00000016 F101 0104       ADD              R1,R1,#4
+   24 0000001A 1E40            SUBS             R0,R0,#1
+   25 0000001C D1FA            BNE              L1
+   26 0000001E 4770            BX               LR
+   27 00000020         
+   28 00000020 F04F 5100 
+                       COPY    LDR              R1,=RAM1_ADDR
+   29 00000024 4A06            LDR              R2,=RAM2_ADDR
+   30 00000026 F04F 000A       MOV              R0,#10
+   31 0000002A         
+   32 0000002A 680B    L2      LDR              R3,[R1]
+   33 0000002C 6013            STR              R3,[R2]
+   34 0000002E F101 0104       ADD              R1,R1,#4
+   35 00000032 F102 0204       ADD              R2,R2,#4
+   36 00000036 1E40            SUBS             R0,R0,#1
+   37 00000038 D1F7            BNE              L2
+   38 0000003A 4770            BX               LR
+   39 0000003C         
+   40 0000003C         
+   41 0000003C                 END
+              DEADBEEF 
+              20000100 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+COPY 00000020
+
+Symbol: COPY
+   Definitions
+      At line 28 in file main.s
+   Uses
+      At line 12 in file main.s
+Comment: COPY used once
+FILL 0000000A
+
+Symbol: FILL
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 11 in file main.s
+Comment: FILL used once
+L1 00000014
+
+Symbol: L1
+   Definitions
+      At line 22 in file main.s
+   Uses
+      At line 25 in file main.s
+Comment: L1 used once
+L2 0000002A
+
+Symbol: L2
+   Definitions
+      At line 32 in file main.s
+   Uses
+      At line 37 in file main.s
+Comment: L2 used once
+Stop 00000008
+
+Symbol: Stop
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 10 in file main.s
+   Uses
+      At line 8 in file main.s
+Comment: __main used once
+myCode 00000000
+
+Symbol: myCode
+   Definitions
+      At line 6 in file main.s
+   Uses
+      None
+Comment: myCode unused
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+RAM1_ADDR 20000000
+
+Symbol: RAM1_ADDR
+   Definitions
+      At line 2 in file main.s
+   Uses
+      At line 18 in file main.s
+      At line 28 in file main.s
+
+RAM2_ADDR 20000100
+
+Symbol: RAM2_ADDR
+   Definitions
+      At line 3 in file main.s
+   Uses
+      At line 29 in file main.s
+Comment: RAM2_ADDR used once
+2 symbols
+347 symbols in table

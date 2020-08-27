@@ -1,0 +1,84 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             myCode, CODE,READONLY
+    4 00000000                 ENTRY
+    5 00000000                 EXPORT           __main
+    6 00000000         
+    7 00000000         
+    8 00000000         
+    9 00000000         __main
+   10 00000000 490E            LDR              R1,=1000000000
+   11 00000002 4A0F            LDR              R2,=2000000000
+   12 00000004 4B0F            LDR              R3,=3000000000
+   13 00000006 4C10            LDR              R4,=4000000000
+   14 00000008 4D10            LDR              R5,=4100000000
+   15 0000000A         
+   16 0000000A F04F 0800       MOV              R8,#0       ;R8 =0 for savin th
+                                                            e lower word
+   17 0000000E F04F 0900       MOV              R9,#0       ;R9 =0  for accumul
+                                                            ating the carries
+   18 00000012         
+   19 00000012 EB18 0801       ADDS             R8,R8,R1    ;R8 =R8 +R1
+   20 00000016 F149 0900       ADC              R9,R9,#0    ;R9 = R9 +0 + Carry
+                                                            
+   21 0000001A EB18 0802       ADDS             R8,R8,R2    ;R8  = R8 +R2
+   22 0000001E F149 0900       ADC              R9,R9,#0    ;R9 = R9 +0 +Carry
+   23 00000022 EB18 0803       ADDS             R8,R8,R3
+   24 00000026 F149 0900       ADC              R9,R9,#0
+   25 0000002A EB18 0804       ADDS             R8,R8,R4
+   26 0000002E F149 0900       ADC              R9,R9,#0
+   27 00000032 EB18 0805       ADDS             R8,R8,R5
+   28 00000036 F149 0900       ADC              R9,R9,#0
+   29 0000003A         
+   30 0000003A E7FE    Stop    B                Stop
+   31 0000003C                 END
+              3B9ACA00 
+              77359400 
+              B2D05E00 
+              EE6B2800 
+              F4610900 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 0000003A
+
+Symbol: Stop
+   Definitions
+      At line 30 in file main.s
+   Uses
+      At line 30 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 5 in file main.s
+Comment: __main used once
+myCode 00000000
+
+Symbol: myCode
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: myCode unused
+3 symbols
+341 symbols in table

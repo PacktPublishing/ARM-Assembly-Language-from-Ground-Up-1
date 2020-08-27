@@ -1,0 +1,96 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             fact, CODE, READONLY
+    2 00000000                 ENTRY
+    3 00000000                 EXPORT           __main
+    4 00000000         
+    5 00000000         ; Iterative implemetation
+    6 00000000         
+    7 00000000         ;__main
+    8 00000000         ;MOV R0,#8   ; Compute fact(8)
+    9 00000000         
+   10 00000000         ;Fact  MOV R1,#1
+   11 00000000         ;loop  CMP R0,#1
+   12 00000000         ;BLS done
+   13 00000000         ;MUL R1,R0,R1
+   14 00000000         ;SUB R0,R0,#1
+   15 00000000         ;B  loop
+   16 00000000         
+   17 00000000         
+   18 00000000         ;done  MOV R0,R1
+   19 00000000         ;BX  LR
+   20 00000000         ;ALIGN
+   21 00000000         ;END
+   22 00000000         
+   23 00000000         ; Recursive implemetation
+   24 00000000         
+   25 00000000         __main
+   26 00000000 F04F 0008       MOV              R0,#8
+   27 00000004 2801    Fact    CMP              R0,#1
+   28 00000006 D909            BLS              done
+   29 00000008 B501            PUSH             {R0,LR}
+   30 0000000A F1A0 0001       SUB              R0,R0,#1    ; n=n-1
+   31 0000000E F7FF FFF9       BL               Fact
+   32 00000012 E8BD 4002       POP              {R1,LR}
+   33 00000016 FB00 F001       MUL              R0,R0,R1    ; R0 = n* Fact(n-1)
+                                                            
+   34 0000001A 4770            BX               LR
+   35 0000001C         
+   36 0000001C         
+   37 0000001C         
+   38 0000001C F04F 0001 
+                       done    MOV              R0,#1
+   39 00000020 4770            BX               LR
+   40 00000022 00 00           ALIGN
+   41 00000024                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Fact 00000004
+
+Symbol: Fact
+   Definitions
+      At line 27 in file main.s
+   Uses
+      At line 31 in file main.s
+Comment: Fact used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: __main used once
+done 0000001C
+
+Symbol: done
+   Definitions
+      At line 38 in file main.s
+   Uses
+      At line 28 in file main.s
+Comment: done used once
+fact 00000000
+
+Symbol: fact
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: fact unused
+4 symbols
+340 symbols in table

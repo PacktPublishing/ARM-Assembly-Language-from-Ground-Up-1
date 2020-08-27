@@ -1,0 +1,62 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;Let’s perform a simple Boolean operation to calculate t
+                       he bitwise calculation of F = A.B + bar(C.D)
+    2 00000000         ;Assume that A, B, C, D are in r1, r2, r3, r4, respectiv
+                       ely.
+    3 00000000         
+    4 00000000                 AREA             SimpleBool, CODE, READONLY
+    5 00000000                 EXPORT           __main
+    6 00000000         
+    7 00000000         
+    8 00000000         __main
+    9 00000000 EA01 0002       AND              R0,R1,R2
+   10 00000004 EA03 0304       AND              R3,R3,R4
+   11 00000008 EA6F 0303       MVN              R3,R3
+   12 0000000C EA40 0003       ORR              R0,R0,R3
+   13 00000010         
+   14 00000010 E7FE    Stop    B                Stop
+   15 00000012         
+                       
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SimpleBool 00000000
+
+Symbol: SimpleBool
+   Definitions
+      At line 4 in file main.s
+   Uses
+      None
+Comment: SimpleBool unused
+Stop 00000010
+
+Symbol: Stop
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 5 in file main.s
+Comment: __main used once
+3 symbols
+338 symbols in table

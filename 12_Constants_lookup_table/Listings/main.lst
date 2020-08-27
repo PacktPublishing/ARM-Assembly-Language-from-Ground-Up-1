@@ -1,0 +1,87 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             Swap, CODE, READONLY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 480E            LDR              R0, =0xE000ED88 ;Read value at 
+                                                            the address of the 
+                                                            Coprocessor Access 
+                                                            Control Register
+    9 00000002 6801            LDR              R1,[R0]
+   10 00000004 F441 0170       ORR              R1,R1,#(0xF << 20) 
+                                                            ;Enable CP10,CP11
+   11 00000008 6001            STR              R1,[R0]
+   12 0000000A F20F 0114 
+              F101 0100        ADRL             R1,ConstantTable
+   13 00000012         ;load s2 with pi, s3 with 10.0
+   14 00000012         ; and multiply them to s4
+   15 00000012 ED91 1A05       VLDR.F           S2,[R1,#20]
+   16 00000016 EDD1 1A03       VLDR.F           S3,[R1,#12]
+   17 0000001A EE21 2A21       VMUL.F           S4,S2,S3
+   18 0000001E         
+   19 0000001E E7FE    Stop    B                Stop
+   20 00000020         
+   21 00000020         ConstantTable
+   22 00000020 3F800000        DCD              0x3F800000  ; 1.0
+   23 00000024 40000000        DCD              0x40000000  ; 2.0
+   24 00000028 80000000        DCD              0x80000000  ; -0.0
+   25 0000002C 41200000        DCD              0x41200000  ; 10.0
+   26 00000030 42C80000        DCD              0x42C80000  ; 100.0
+   27 00000034 40490FDB        DCD              0x40490FDB  ; pi
+   28 00000038 402DF854        DCD              0x402DF854  ; e
+                       
+              E000ED88 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ConstantTable 00000020
+
+Symbol: ConstantTable
+   Definitions
+      At line 21 in file main.s
+   Uses
+      At line 12 in file main.s
+Comment: ConstantTable used once
+Stop 0000001E
+
+Symbol: Stop
+   Definitions
+      At line 19 in file main.s
+   Uses
+      At line 19 in file main.s
+Comment: Stop used once
+Swap 00000000
+
+Symbol: Swap
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: Swap unused
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+4 symbols
+341 symbols in table

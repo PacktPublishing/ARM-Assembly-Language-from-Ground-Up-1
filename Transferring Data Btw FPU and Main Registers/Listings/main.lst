@@ -1,0 +1,67 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             FPU2, CODE, READONLY
+    2 00000000                 ENTRY
+    3 00000000                 EXPORT           __main
+    4 00000000         
+    5 00000000         
+    6 00000000         __main
+    7 00000000 4806            LDR              R0,= 0xE000ED88
+    8 00000002 6801            LDR              R1,[R0]
+    9 00000004 F441 0170       ORR              R1,R1,#(0xF<<20)
+   10 00000008 6001            STR              R1,[R0]
+   11 0000000A         
+   12 0000000A F04F 537E       LDR              R3,=0x3F800000
+   13 0000000E EE01 3A90       VMOV.F           S3,R3
+   14 00000012         
+   15 00000012 ED9F 2A03       VLDR.F           S4,= 6.0221415e23
+   16 00000016 EE12 4A10       VMOV.F           R4,S4
+   17 0000001A         
+   18 0000001A E7FE    Stop    B                Stop
+   19 0000001C                 ALIGN
+   20 0000001C                 END
+              E000ED88 
+              66FF0C30 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_CortexM4 -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main
+.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+FPU2 00000000
+
+Symbol: FPU2
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: FPU2 unused
+Stop 0000001A
+
+Symbol: Stop
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: __main used once
+3 symbols
+341 symbols in table

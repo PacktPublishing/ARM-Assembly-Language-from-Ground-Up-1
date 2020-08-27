@@ -1,0 +1,239 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Registers used:
+    2 00000000         ; r0 = return value in Q31 notation
+    3 00000000         ; r1 = sin argument (in degrees, from 0 to 360)
+    4 00000000         ; r2 = temp
+    5 00000000         ; r4 = starting address of sine table
+    6 00000000         ; r7 = copy of argument
+    7 00000000         
+    8 00000000                 AREA             SineTable, CODE, READONLY
+    9 00000000                 EXPORT           __main
+   10 00000000         
+   11 00000000         
+   12 00000000         __main
+   13 00000000         
+   14 00000000 F04F 0128       MOV              R1,#40
+   15 00000004 460F            MOV              R7,R1       ; make a copy of th
+                                                            e argument
+   16 00000006 F44F 7287       LDR              R2, = 270   ; constant won’t fi
+                                                            t into rotation sch
+                                                            eme
+   17 0000000A A40A            ADR              R4, sin_data ; load address of 
+                                                            sin table
+   18 0000000C 295A            CMP              R1, #90     ; determine quadran
+                                                            t
+   19 0000000E DD0A            BLE              retvalue    ; first quadrant?
+   20 00000010 29B4            CMP              R1, #180
+   21 00000012 BFDC            ITT              LE
+   22 00000014 F1C1 01B4       RSBLE            R1,R1,#180  ; second quadrant?
+   23 00000018 E005            BLE              retvalue
+   24 0000001A 4291            CMP              R1, R2
+   25 0000001C BFDC            ITT              LE
+   26 0000001E 39B4            SUBLE            R1, R1, #180 ; third quadrant?
+   27 00000020 E001            BLE              retvalue
+   28 00000022 F5C1 71B4       RSB              R1, R1, #360 
+                                                            ; otherwise, fourth
+                                                            
+   29 00000026         
+   30 00000026         retvalue
+   31 00000026         ; get sin value from table
+   32 00000026 F854 0021       LDR              R0, [R4, R1, LSL #2]
+   33 0000002A 2FB4            CMP              R7, #180    ; do we return a ne
+                                                            g value?
+   34 0000002C BFC8            IT               GT
+   35 0000002E 4240            RSBGT            R0, R0, #0  ; negate the value 
+                                                            if so
+   36 00000030 E7FE    done    B                done
+   37 00000032 00 00           ALIGN
+   38 00000034         
+   39 00000034         
+   40 00000034         
+   41 00000034         sin_data
+   42 00000034 00000000 
+              023BE164 
+              04779630 
+              06B2F1D8         DCD              0x00000000,0x023BE164,0x0477963
+0,0x06B2F1D8
+   43 00000044 08EDC7B0 
+              0B27EB50 
+              0D613050 
+              0F996A30         DCD              0x08EDC7B0,0x0B27EB50,0x0D61305
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+0,0x0F996A30
+   44 00000054 11D06CA0 
+              14060B80 
+              163A1A80 
+              186C6DE0         DCD              0x11D06CA0,0x14060B80,0x163A1A8
+0,0x186C6DE0
+   45 00000064 1A9CD9C0 
+              1CCB3220 
+              1EF74C00 
+              2120FB80         DCD              0x1A9CD9C0,0x1CCB3220,0x1EF74C0
+0,0x2120FB80
+   46 00000074 234815C0 
+              256C6F80 
+              278DDE80 
+              29AC3780         DCD              0x234815C0,0x256C6F80,0x278DDE8
+0,0x29AC3780
+   47 00000084 2BC750C0 
+              2DDF0040 
+              2FF31BC0 
+              32037A40         DCD              0x2BC750C0,0x2DDF0040,0x2FF31BC
+0,0x32037A40
+   48 00000094 340FF240 
+              36185B00 
+              381C8BC0 
+              3A1C5C80         DCD              0x340FF240,0x36185B00,0x381C8BC
+0,0x3A1C5C80
+   49 000000A4 3C17A500 
+              3E0E3DC0 
+              40000000 
+              41ECC480         DCD              0x3C17A500,0x3E0E3DC0,0x4000000
+0,0x41ECC480
+   50 000000B4 43D46500 
+              45B6BB80 
+              4793A200 
+              496AF400         DCD              0x43D46500,0x45B6BB80,0x4793A20
+0,0x496AF400
+   51 000000C4 4B3C8C00 
+              4D084600 
+              4ECDFF00 
+              508D9200         DCD              0x4B3C8C00,0x4D084600,0x4ECDFF0
+0,0x508D9200
+   52 000000D4 5246DD00 
+              53F9BE00 
+              55A61280 
+              574BB900         DCD              0x5246DD00,0x53F9BE00,0x55A6128
+0,0x574BB900
+   53 000000E4 58EA9100 
+              5A827980 
+              5C135380 
+              5D9CFF80         DCD              0x58EA9100,0x5A827980,0x5C13538
+0,0x5D9CFF80
+   54 000000F4 5F1F5F00 
+              609A5280 
+              620DBE80 
+              63798500         DCD              0x5F1F5F00,0x609A5280,0x620DBE8
+0,0x63798500
+   55 00000104 64DD8900 
+              6639B080 
+              678DDE80 
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+              68D9F980         DCD              0x64DD8900,0x6639B080,0x678DDE8
+0,0x68D9F980
+   56 00000114 6A1DE700 
+              6B598F00 
+              6C8CD700 
+              6DB7A880         DCD              0x6A1DE700,0x6B598F00,0x6C8CD70
+0,0x6DB7A880
+   57 00000124 6ED9EC00 
+              6FF38A00 
+              71046D00 
+              720C8080         DCD              0x6ED9EC00,0x6FF38A00,0x71046D0
+0,0x720C8080
+   58 00000134 730BAF00 
+              7401E500 
+              74EF0F00 
+              75D31A80         DCD              0x730BAF00,0x7401E500,0x74EF0F0
+0,0x75D31A80
+   59 00000144 76ADF600 
+              777F9000 
+              7847D900 
+              7906C080         DCD              0x76ADF600,0x777F9000,0x7847D90
+0,0x7906C080
+   60 00000154 79BC3880 
+              7A683200 
+              7B0A9F80 
+              7BA37500         DCD              0x79BC3880,0x7A683200,0x7B0A9F8
+0,0x7BA37500
+   61 00000164 7C32A680 
+              7CB82880 
+              7D33F100 
+              7DA5F580         DCD              0x7C32A680,0x7CB82880,0x7D33F10
+0,0x7DA5F580
+   62 00000174 7E0E2E00 
+              7E6C9280 
+              7EC11A80 
+              7F0BC080         DCD              0x7E0E2E00,0x7E6C9280,0x7EC11A8
+0,0x7F0BC080
+   63 00000184 7F4C7E80 
+              7F834F00 
+              7FB02E00 
+              7FD31780         DCD              0x7F4C7E80,0x7F834F00,0x7FB02E0
+0,0x7FD31780
+   64 00000194 7FEC0A00 
+              7FFB0280 
+              7FFFFFFF         DCD              0x7FEC0A00,0x7FFB0280,0x7FFFFFF
+F
+   65 000001A0                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SineTable 00000000
+
+Symbol: SineTable
+   Definitions
+      At line 8 in file main.s
+   Uses
+      None
+Comment: SineTable unused
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 9 in file main.s
+Comment: __main used once
+done 00000030
+
+Symbol: done
+   Definitions
+      At line 36 in file main.s
+   Uses
+      At line 36 in file main.s
+Comment: done used once
+retvalue 00000026
+
+Symbol: retvalue
+   Definitions
+      At line 30 in file main.s
+   Uses
+      At line 19 in file main.s
+      At line 23 in file main.s
+      At line 27 in file main.s
+
+sin_data 00000034
+
+Symbol: sin_data
+   Definitions
+      At line 41 in file main.s
+   Uses
+      At line 17 in file main.s
+Comment: sin_data used once
+5 symbols
+340 symbols in table

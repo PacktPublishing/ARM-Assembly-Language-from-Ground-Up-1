@@ -1,0 +1,92 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;AREA simpleShift, CODE, READONLY
+    3 00000000         ;EXPORT  __main
+    4 00000000         
+    5 00000000         ;;Computing n factorial, let n=10
+    6 00000000         ;__main  
+    7 00000000         ;MOV  R6,#10  ; load n into r6
+    8 00000000         ;MOV  R7,#1  ;if n=0, at least n!=1
+    9 00000000         
+   10 00000000         ;loop CMP  R6,#0
+   11 00000000         ;MULGT R7,R6,R7
+   12 00000000         ;SUBGT R6,R6,#1 ;decrement
+   13 00000000         ;BGT  loop  ; do another mul if counter !=0
+   14 00000000         
+   15 00000000         ;Stop    B     Stop
+   16 00000000         ;END
+   17 00000000         
+   18 00000000         
+   19 00000000         
+   20 00000000         ;Thumb2 execution for cortex-m boards
+   21 00000000         
+   22 00000000                 AREA             simpleShift, CODE, READONLY
+   23 00000000                 THUMB
+   24 00000000                 EXPORT           __main
+   25 00000000         
+   26 00000000         ;Computing n factorial, let n=10
+   27 00000000         __main
+   28 00000000 F04F 060A       MOV              R6,#10      ; load n into r6
+   29 00000004 F04F 0701       MOV              R7,#1       ;if n=0, at least n
+                                                            !=1
+   30 00000008         
+   31 00000008 2E00    loop    CMP              R6,#0
+   32 0000000A BFC2            ITTT             GT
+   33 0000000C 4377            MULGT            R7,R6,R7
+   34 0000000E 1E76            SUBGT            R6,R6,#1    ;decrement
+   35 00000010 E7FA            BGT              loop        ; do another mul if
+                                                             counter !=0
+   36 00000012         
+   37 00000012 E7FE    Stop    B                Stop
+   38 00000014                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 00000012
+
+Symbol: Stop
+   Definitions
+      At line 37 in file main.s
+   Uses
+      At line 37 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 27 in file main.s
+   Uses
+      At line 24 in file main.s
+Comment: __main used once
+loop 00000008
+
+Symbol: loop
+   Definitions
+      At line 31 in file main.s
+   Uses
+      At line 35 in file main.s
+Comment: loop used once
+simpleShift 00000000
+
+Symbol: simpleShift
+   Definitions
+      At line 22 in file main.s
+   Uses
+      None
+Comment: simpleShift unused
+4 symbols
+339 symbols in table

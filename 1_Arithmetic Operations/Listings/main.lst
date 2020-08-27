@@ -1,0 +1,113 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;Example 1. P = Q + R + S
+    2 00000000         ;let Q = 2, R = 4, S = 5 and assume r1 = Q, r2 = R, r3 =
+                        S. 
+    3 00000000         ;we will put the data in memory in
+    4 00000000         ;the form of constants before the program runs.
+    5 00000000         
+    6 00000000         ;Here we use the instruction MOV that copies a value int
+                       o a register. The value may be the contents of another r
+                       egister or
+    7 00000000         ;a literal. The literal is denoted by the # symbol. We c
+                       an write, for example, MOV r7,r0, MOV r1,#25 or
+    8 00000000         ;MOV r5,#Time
+    9 00000000         
+   10 00000000         ;@note: Tick "Us MicroLIB" in terget options to enable a
+                        more
+   11 00000000         ;intrusive debuggging
+   12 00000000         ;Explain from ARM_PPT4
+   13 00000000         
+   14 00000000 00000002 
+                       Q       EQU              2
+   15 00000000 00000004 
+                       R       EQU              4
+   16 00000000 00000005 
+                       S       EQU              5
+   17 00000000         
+   18 00000000         
+   19 00000000                 AREA             SimpleAdd, CODE, READONLY
+   20 00000000                 EXPORT           __main
+   21 00000000         
+   22 00000000         
+   23 00000000         __main
+   24 00000000 F04F 0102       MOV              R1,#Q
+   25 00000004 F04F 0204       MOV              R2,#R
+   26 00000008 F04F 0305       MOV              R3,#S
+   27 0000000C EB01 0002       ADD              R0,R1,R2
+   28 00000010 4418            ADD              R0,R0,R3
+   29 00000012 E7FE    Stop    B                Stop
+   30 00000014                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SimpleAdd 00000000
+
+Symbol: SimpleAdd
+   Definitions
+      At line 19 in file main.s
+   Uses
+      None
+Comment: SimpleAdd unused
+Stop 00000012
+
+Symbol: Stop
+   Definitions
+      At line 29 in file main.s
+   Uses
+      At line 29 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 20 in file main.s
+Comment: __main used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Q 00000002
+
+Symbol: Q
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 24 in file main.s
+Comment: Q used once
+R 00000004
+
+Symbol: R
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 25 in file main.s
+Comment: R used once
+S 00000005
+
+Symbol: S
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 26 in file main.s
+Comment: S used once
+3 symbols
+341 symbols in table

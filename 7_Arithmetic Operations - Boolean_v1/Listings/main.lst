@@ -1,0 +1,70 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             Bool, CODE, READONLY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 F242 01F2       LDR              R1,=2_0010000011110010 ;Load P
+    9 00000004 F243 02F0       LDR              R2,=2_0011000011110000 ;Load Q
+   10 00000008 F24C 43F8       LDR              R3,=2_1100010011111000 ;Load R
+   11 0000000C EA4F 0252       MOV              R2,R2,LSR #1 ;Right justify Q o
+                                                            ne place
+   12 00000010 EA82 1251       EOR              R2,R2,R1, LSR #5 ;Calculate Q E
+                                                            OR R (and right jus
+                                                            tify R five places)
+                                                            
+   13 00000014 EA42 2251       ORR              R2,R2,R1, LSR #9 ;Logical OR wi
+                                                            th P to get (P + Q 
+                                                            EOR R)
+   14 00000018 F002 023F       AND              R2,R2,#0x3F ; AND with 111110 t
+                                                            o get (P + Q EOR R)
+                                                            .111110
+   15 0000001C         
+   16 0000001C E7FE    Stop    B                Stop
+   17 0000001E         
+                       
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Bool 00000000
+
+Symbol: Bool
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: Bool unused
+Stop 0000001C
+
+Symbol: Stop
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 16 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+3 symbols
+338 symbols in table

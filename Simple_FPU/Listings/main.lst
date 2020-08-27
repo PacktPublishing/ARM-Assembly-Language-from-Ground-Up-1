@@ -1,0 +1,64 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             simpleFPU, CODE, READONLY
+    2 00000000                 ENTRY
+    3 00000000                 EXPORT           __main
+    4 00000000         
+    5 00000000         
+    6 00000000         __main
+    7 00000000 4805            LDR              R0,=0xE000ED88
+    8 00000002 6801            LDR              R1,[R0]
+    9 00000004 F441 0170       ORR              R1,R1,#(0xF<<20)
+   10 00000008 6001            STR              R1,[R0]
+   11 0000000A         
+   12 0000000A EEB7 0A00       VMOV.F           S0,#0x3F800000
+   13 0000000E EEF0 0A40       VMOV.F           S1,S0
+   14 00000012 EE30 1A80       VADD.F           S2,S1,S0
+   15 00000016         
+   16 00000016 E7FE    Stop    B                Stop
+   17 00000018                 ALIGN
+   18 00000018                 END
+              E000ED88 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 00000016
+
+Symbol: Stop
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 16 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: __main used once
+simpleFPU 00000000
+
+Symbol: simpleFPU
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: simpleFPU unused
+3 symbols
+341 symbols in table

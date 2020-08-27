@@ -1,0 +1,102 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000                 AREA             myCode, CODE,READONLY
+    3 00000000                 ENTRY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 480A            LDR              R0,=SIGN_DATA
+    9 00000002 F04F 0308       MOV              R3,#8
+   10 00000006         
+   11 00000006 F990 2000       LDRSB            R2,[R0]
+   12 0000000A F100 0001       ADD              R0,R0,#1
+   13 0000000E         
+   14 0000000E F990 1000 
+                       BEGIN   LDRSB            R1,[R0]
+   15 00000012 4291            CMP              R1, R2
+   16 00000014 DA00            BGE              NEXT
+   17 00000016 460A            MOV              R2,R1
+   18 00000018         
+   19 00000018 F100 0001 
+                       NEXT    ADD              R0,R0,#1
+   20 0000001C 1E5B            SUBS             R3,R3,#1
+   21 0000001E D1F6            BNE              BEGIN
+   22 00000020         
+   23 00000020 E7FE    Stop    B                Stop
+   24 00000022         
+   25 00000022 0D F6 13 
+              0E EE F7 
+              0C EC    SIGN_DATA
+                               DCB              +13,-10,+19,+14,-18,-9,+12,-20
+   26 0000002A 00 00           ALIGN
+   27 0000002C                 END
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_CortexM4 -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main
+.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+BEGIN 0000000E
+
+Symbol: BEGIN
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: BEGIN used once
+NEXT 00000018
+
+Symbol: NEXT
+   Definitions
+      At line 19 in file main.s
+   Uses
+      At line 16 in file main.s
+Comment: NEXT used once
+SIGN_DATA 00000022
+
+Symbol: SIGN_DATA
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 8 in file main.s
+Comment: SIGN_DATA used once
+Stop 00000020
+
+Symbol: Stop
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 23 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+myCode 00000000
+
+Symbol: myCode
+   Definitions
+      At line 2 in file main.s
+   Uses
+      None
+Comment: myCode unused
+6 symbols
+344 symbols in table

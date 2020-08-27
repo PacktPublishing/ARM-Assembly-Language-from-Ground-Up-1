@@ -1,0 +1,17 @@
+
+	
+		AREA	Bool, CODE, READONLY
+		EXPORT  __main
+
+
+__main
+		LDR 	R1,=2_0010000011110010 ;Load P
+		LDR 	R2,=2_0011000011110000 ;Load Q
+		LDR 	R3,=2_1100010011111000 ;Load R
+		MOV 	R2,LSR #1 ;Right justify Q one place
+		EOR 	R2,R2,R1, LSR #5 ;Calculate Q EOR R (and right justify R five places)
+		ORR 	R2,R2,R1, LSR #9 ;Logical OR with P to get (P + Q EOR R)
+		AND 	R2,R2,#0x3F ; AND with 111110 to get (P + Q EOR R).111110
+
+Stop    B	    	Stop
+

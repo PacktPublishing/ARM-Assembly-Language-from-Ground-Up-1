@@ -1,0 +1,146 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             Swap, CODE, READONLY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 480C            LDR              R0, =0xE000ED88 ;Read value at 
+                                                            the address of the 
+                                                            Coprocessor Access 
+                                                            Control Register
+    9 00000002 6801            LDR              R1,[R0]
+   10 00000004 F441 0170       ORR              R1,R1,#(0xF << 20) 
+                                                            ;Enable CP10,CP11
+   11 00000008 6001            STR              R1,[R0]
+   12 0000000A         ;load s2 with pi, s3 with 10.0
+   13 0000000A         ; and multiply them to s4
+   14 0000000A EDDF 2A08       VLDR.F           S5,C_Pi
+   15 0000000E ED9F 3A05       VLDR.F           S6,C_Ten
+   16 00000012 EE62 3A83       VMUL.F           S7,S5,S6
+   17 00000016         
+   18 00000016 E7FE    Stop    B                Stop
+   19 00000018         
+   20 00000018 3F800000 
+                       C_One   DCD              0x3F800000  ; 1.0
+   21 0000001C 40000000 
+                       C_Two   DCD              0x40000000  ; 2.0
+   22 00000020 80000000 
+                       C_NZero DCD              0x80000000  ; -0.0
+   23 00000024 41200000 
+                       C_Ten   DCD              0x41200000  ; 10.0
+   24 00000028 42C80000 
+                       C_Hun   DCD              0x42C80000  ; 100.0
+   25 0000002C 40490FDB 
+                       C_Pi    DCD              0x40490FDB  ; pi
+   26 00000030 402DF854 
+                       C_e     DCD              0x402DF854  ; e
+   27 00000034                 ALIGN
+   28 00000034                 END
+              E000ED88 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+C_Hun 00000028
+
+Symbol: C_Hun
+   Definitions
+      At line 24 in file main.s
+   Uses
+      None
+Comment: C_Hun unused
+C_NZero 00000020
+
+Symbol: C_NZero
+   Definitions
+      At line 22 in file main.s
+   Uses
+      None
+Comment: C_NZero unused
+C_One 00000018
+
+Symbol: C_One
+   Definitions
+      At line 20 in file main.s
+   Uses
+      None
+Comment: C_One unused
+C_Pi 0000002C
+
+Symbol: C_Pi
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: C_Pi used once
+C_Ten 00000024
+
+Symbol: C_Ten
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 15 in file main.s
+Comment: C_Ten used once
+C_Two 0000001C
+
+Symbol: C_Two
+   Definitions
+      At line 21 in file main.s
+   Uses
+      None
+Comment: C_Two unused
+C_e 00000030
+
+Symbol: C_e
+   Definitions
+      At line 26 in file main.s
+   Uses
+      None
+Comment: C_e unused
+Stop 00000016
+
+Symbol: Stop
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: Stop used once
+Swap 00000000
+
+Symbol: Swap
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: Swap unused
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+10 symbols
+347 symbols in table

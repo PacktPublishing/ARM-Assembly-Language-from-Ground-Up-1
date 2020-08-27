@@ -1,0 +1,121 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;P = Q +S +R
+    2 00000000         ;Q=2, R=4, S=5
+    3 00000000         
+    4 00000000         
+    5 00000000         
+    6 00000000         
+    7 00000000                 AREA             eg3, CODE, READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           __main
+   10 00000000         
+   11 00000000         __main
+   12 00000000         
+   13 00000000 F20F 0010 
+              F100 0000        ADRL             R0,P
+   14 00000008 6841            LDR              R1,[R0,#4]
+   15 0000000A 6882            LDR              R2,[R0,#8]
+   16 0000000C         
+   17 0000000C 440A            ADD              R2,R1,R2
+   18 0000000E 68C1            LDR              R1,[R0,#12]
+   19 00000010 440A            ADD              R2,R2,R1
+   20 00000012         
+   21 00000012         
+   22 00000012         
+   23 00000012         
+   24 00000012         
+   25 00000012         Stop
+   26 00000012 E7FE            B                Stop
+   27 00000014         
+   28 00000014         
+   29 00000014         
+   30 00000014                 AREA             eg3, DATA, READONLY
+   31 00000014         
+   32 00000014 00 00 00 
+              00       P       SPACE            4
+   33 00000018 00000002 
+                       Q       DCD              2
+   34 0000001C 00000004 
+                       R       DCD              4
+   35 00000020 00000005 
+                       S       DCD              5
+   36 00000024         
+   37 00000024                 ALIGN
+   38 00000024         
+   39 00000024                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_CortexM4 -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main
+.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+P 00000014
+
+Symbol: P
+   Definitions
+      At line 32 in file main.s
+   Uses
+      At line 13 in file main.s
+Comment: P used once
+Q 00000018
+
+Symbol: Q
+   Definitions
+      At line 33 in file main.s
+   Uses
+      None
+Comment: Q unused
+R 0000001C
+
+Symbol: R
+   Definitions
+      At line 34 in file main.s
+   Uses
+      None
+Comment: R unused
+S 00000020
+
+Symbol: S
+   Definitions
+      At line 35 in file main.s
+   Uses
+      None
+Comment: S unused
+Stop 00000012
+
+Symbol: Stop
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 26 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 11 in file main.s
+   Uses
+      At line 9 in file main.s
+Comment: __main used once
+eg3 00000000
+
+Symbol: eg3
+   Definitions
+      At line 7 in file main.s
+   Uses
+      None
+Comment: eg3 unused
+7 symbols
+343 symbols in table

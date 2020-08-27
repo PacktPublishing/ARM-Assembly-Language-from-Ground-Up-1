@@ -1,0 +1,64 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             Swap, CODE, READONLY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 4804            LDR              R0, =0xF631024C ;load data
+    9 00000002 4905            LDR              R1, =0x17539ABD ;load some data
+                                                            
+   10 00000004 EA80 0001       EOR              R0,R0, R1   ;R0 XOR R1
+   11 00000008 EA80 0101       EOR              R1,R0, R1   ;R1 XOR R1
+   12 0000000C EA80 0001       EOR              R0,R0,R1    ;R0 XOR R1
+   13 00000010         
+   14 00000010         
+   15 00000010 E7FE    Stop    B                Stop
+   16 00000012         
+                       
+              00 00 F631024C 
+              17539ABD 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 00000010
+
+Symbol: Stop
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 15 in file main.s
+Comment: Stop used once
+Swap 00000000
+
+Symbol: Swap
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: Swap unused
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+3 symbols
+340 symbols in table

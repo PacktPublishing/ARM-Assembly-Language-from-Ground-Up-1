@@ -1,0 +1,137 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;P = Q + R + S where Q = 2, R = 4, S = 5. In this case w
+                       e are going to use register indirect addressing to acces
+                       s the
+    3 00000000         ;variables. That is, we have to set up a pointer to the 
+                       variables and access them via this pointer.
+    4 00000000         
+    5 00000000         
+    6 00000000                 AREA             SimpleAdd, CODE, READONLY
+    7 00000000                 EXPORT           __main
+    8 00000000         
+    9 00000000         ;ADR,ADRL pseudo-instruction loads a program-relative or
+                        register-relative address into a register.
+   10 00000000         
+   11 00000000         __main
+   12 00000000 F20F 0414 
+              F104 0400        ADRL             R4,Vals     ;R4 points to the v
+                                                            laues area
+   13 00000008 6861            LDR              R1,[R4,#Q]  ;Load Q into r1
+   14 0000000A 68A2            LDR              R2,[R4,#R]
+   15 0000000C 68E3            LDR              R3,[R4,#S]
+   16 0000000E EB01 0002       ADD              R0,R1,R2
+   17 00000012 4418            ADD              R0,R0,R3
+   18 00000014 6020            STR              R0,[R4,#P]
+   19 00000016         
+   20 00000016 E7FE    Stop    B                Stop
+   21 00000018         
+   22 00000018         
+   23 00000018 00000000 
+                       P       EQU              0           ;offset for P
+   24 00000018 00000004 
+                       Q       EQU              4           ;offset for Q
+   25 00000018 00000008 
+                       R       EQU              8           ;offset for R
+   26 00000018 0000000C 
+                       S       EQU              12          ;offset for S
+   27 00000018         
+   28 00000018                 AREA             SimpleAdd, DATA,READONLY
+   29 00000018 00 00 00 
+              00       Vals    SPACE            4
+   30 0000001C 00000002        DCD              2
+   31 00000020 00000004        DCD              4
+   32 00000024 00000005        DCD              5
+   33 00000028         
+   34 00000028                 ALIGN
+   35 00000028                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SimpleAdd 00000000
+
+Symbol: SimpleAdd
+   Definitions
+      At line 6 in file main.s
+   Uses
+      None
+Comment: SimpleAdd unused
+Stop 00000016
+
+Symbol: Stop
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 20 in file main.s
+Comment: Stop used once
+Vals 00000018
+
+Symbol: Vals
+   Definitions
+      At line 29 in file main.s
+   Uses
+      At line 12 in file main.s
+Comment: Vals used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 11 in file main.s
+   Uses
+      At line 7 in file main.s
+Comment: __main used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+P 00000000
+
+Symbol: P
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: P used once
+Q 00000004
+
+Symbol: Q
+   Definitions
+      At line 24 in file main.s
+   Uses
+      At line 13 in file main.s
+Comment: Q used once
+R 00000008
+
+Symbol: R
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: R used once
+S 0000000C
+
+Symbol: S
+   Definitions
+      At line 26 in file main.s
+   Uses
+      At line 15 in file main.s
+Comment: S used once
+4 symbols
+343 symbols in table

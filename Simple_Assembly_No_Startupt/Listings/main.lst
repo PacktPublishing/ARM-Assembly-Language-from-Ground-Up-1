@@ -1,0 +1,139 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000 00000100 
+                       Stack   EQU              0x00000100  ;Define staxk size 
+                                                            of 256 bytes
+    2 00000000         
+    3 00000000                 AREA             STACK,NOINIT,READWRITE,ALIGN=3
+    4 00000000         
+    5 00000000         StackMem
+                               SPACE            Stack
+    6 00000100         
+    7 00000100                 AREA             RESET,DATA, READONLY
+    8 00000000                 EXPORT           __Vectors
+    9 00000000         
+   10 00000000         
+   11 00000000         __Vectors
+   12 00000000 00000100        DCD              StackMem +Stack
+   13 00000004 00000000        DCD              Reset_Handler
+   14 00000008                 ALIGN
+   15 00000008         
+   16 00000008                 AREA             SimpleProject,CODE,READONLY,ALI
+GN=2
+   17 00000000                 ENTRY
+   18 00000000                 EXPORT           Reset_Handler
+   19 00000000         
+   20 00000000         Reset_Handler
+   21 00000000 F241 2534       MOV              R5,#0x1234
+   22 00000004 F241 2334       MOV              R3,#0x1234
+   23 00000008         
+   24 00000008 EB05 0603       ADD              R6,R5,R3
+   25 0000000C         
+   26 0000000C E7FE    STOP    B                STOP
+   27 0000000E         
+   28 0000000E                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_ARM_CORTEXM4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\Device\ARM\ARMCM4\Include -IC:\Keil_v5\ARM\CMSIS\
+Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine
+="__UVISION_VERSION SETA 525" --predefine="ARMCM4 SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: STACK unused
+StackMem 00000000
+
+Symbol: StackMem
+   Definitions
+      At line 5 in file main.s
+   Uses
+      At line 12 in file main.s
+Comment: StackMem used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 7 in file main.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 11 in file main.s
+   Uses
+      At line 8 in file main.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 13 in file main.s
+      At line 18 in file main.s
+
+STOP 0000000C
+
+Symbol: STOP
+   Definitions
+      At line 26 in file main.s
+   Uses
+      At line 26 in file main.s
+Comment: STOP used once
+SimpleProject 00000000
+
+Symbol: SimpleProject
+   Definitions
+      At line 16 in file main.s
+   Uses
+      None
+Comment: SimpleProject unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Stack 00000100
+
+Symbol: Stack
+   Definitions
+      At line 1 in file main.s
+   Uses
+      At line 5 in file main.s
+      At line 12 in file main.s
+
+1 symbol
+342 symbols in table

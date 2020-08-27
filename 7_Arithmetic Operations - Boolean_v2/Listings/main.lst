@@ -1,0 +1,77 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 AREA             Bool, CODE, READONLY
+    4 00000000                 EXPORT           __main
+    5 00000000         
+    6 00000000         
+    7 00000000         __main
+    8 00000000 F242 01F2       LDR              R1,=2_0010000011110010 ;Set P
+    9 00000004 F243 02F0       LDR              R2,=2_0011000011110000 ;Set Q
+   10 00000008 F24C 43F8       LDR              R3,=2_1100010011111000 ;Set R
+   11 0000000C         
+   12 0000000C EA4F 2451       MOV              R4,R1,LSR #9 ;Right justify P
+   13 00000010 EA4F 0552       MOV              R5,R2,LSR #1 ;Right justify  Q
+   14 00000014 EA4F 1653       MOV              R6,R3,LSR #5 ;Right justify R
+   15 00000018         
+   16 00000018 F004 073F       AND              R7,R4,#0x3F ;Convert P to six s
+                                                            ignificant bits rig
+                                                            ht-justified
+   17 0000001C F005 083F       AND              R8,R5,#0x3F ;do Q 
+   18 00000020 F006 093F       AND              R9,R6,#0x3F ;do R
+   19 00000024         
+   20 00000024 EA88 0A09       EOR              R10,R8,R9   ;Calculate Q EOR R
+   21 00000028 EA47 0B0A       ORR              R11,R7,R10  ;Logical OR result 
+                                                            with P to get (P + 
+                                                            Q EOR R)
+   22 0000002C F00B 0C3E       AND              R12,R11,#0x3E ;AND with 111110 
+                                                            to get (P + Q EOR R
+                                                            ).111110
+   23 00000030         
+   24 00000030         
+   25 00000030 E7FE    Stop    B                Stop
+   26 00000032         
+                       
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Bool 00000000
+
+Symbol: Bool
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: Bool unused
+Stop 00000030
+
+Symbol: Stop
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 25 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 4 in file main.s
+Comment: __main used once
+3 symbols
+338 symbols in table

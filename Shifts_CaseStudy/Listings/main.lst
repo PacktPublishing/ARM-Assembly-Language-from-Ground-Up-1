@@ -1,0 +1,69 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; (A + 8B + 7C -27) /4
+    2 00000000         ; Let A = 25, B =19, c=99
+    3 00000000         
+    4 00000000                 AREA             CmEqu, CODE, READONLY
+    5 00000000                 ENTRY
+    6 00000000                 EXPORT           __main
+    7 00000000         
+    8 00000000         
+    9 00000000         __main
+   10 00000000 F04F 0019       MOV              R0,#25
+   11 00000004 F04F 0113       MOV              R1,#19
+   12 00000008 EB00 00C1       ADD              R0,R0,R1,LSL #3 ; Add 8B to A p
+                                                            ut result in r0
+   13 0000000C F04F 0163       MOV              R1,#99
+   14 00000010 F04F 0207       MOV              R2,#7
+   15 00000014 FB01 0002       MLA              R0,R1,R2,R0 ; Add 7C to R0 put 
+                                                            result in R0
+   16 00000018 F1A0 001B       SUB              R0,R0,#27
+   17 0000001C EA4F 00A0       MOV              R0,R0,ASR #2 ;Divide the total 
+                                                            by 4
+   18 00000020         
+   19 00000020 E7FE    Stop    B                Stop
+   20 00000022         
+   21 00000022                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+CmEqu 00000000
+
+Symbol: CmEqu
+   Definitions
+      At line 4 in file main.s
+   Uses
+      None
+Comment: CmEqu unused
+Stop 00000020
+
+Symbol: Stop
+   Definitions
+      At line 19 in file main.s
+   Uses
+      At line 19 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 6 in file main.s
+Comment: __main used once
+3 symbols
+339 symbols in table

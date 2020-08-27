@@ -1,0 +1,19 @@
+;We are going to perform a more complex arithmetic evaluation. Assume that we wish to evaluate (A + 8B + 7C - 27)/4,
+;where A = 25, B = 19, and C = 99.
+	
+		AREA	SimpleAdd, CODE, READONLY
+		EXPORT  __main
+
+
+__main		
+		MOV			R0,#25				;Load register R0 with 25
+		MOV			R1,#19
+		ADD			R0,R0,R1,LSL #3     ;Add 8 X B to A in r0 
+		MOV			R1,#99
+		MOV			R2,#7               
+		MLA			R0,R1,R2,R0			;Add 7 x Cto ttotal in r0
+		SUB			R0,R0,#27
+		MOV			R0,R0,ASR #27		; Divide the total by 4
+		
+Stop    B	    	Stop
+

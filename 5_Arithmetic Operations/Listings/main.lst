@@ -1,0 +1,70 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;We are going to perform a more complex arithmetic evalu
+                       ation. Assume that we wish to evaluate (A + 8B + 7C - 27
+                       )/4,
+    2 00000000         ;where A = 25, B = 19, and C = 99.
+    3 00000000         
+    4 00000000                 AREA             SimpleAdd, CODE, READONLY
+    5 00000000                 EXPORT           __main
+    6 00000000         
+    7 00000000         
+    8 00000000         __main
+    9 00000000 F04F 0019       MOV              R0,#25      ;Load register R0 w
+                                                            ith 25
+   10 00000004 F04F 0113       MOV              R1,#19
+   11 00000008 EB00 00C1       ADD              R0,R0,R1,LSL #3 ;Add 8 X B to A
+                                                             in r0 
+   12 0000000C F04F 0163       MOV              R1,#99
+   13 00000010 F04F 0207       MOV              R2,#7
+   14 00000014 FB01 0002       MLA              R0,R1,R2,R0 ;Add 7 x Cto ttotal
+                                                             in r0
+   15 00000018 F1A0 001B       SUB              R0,R0,#27
+   16 0000001C EA4F 60E0       MOV              R0,R0,ASR #27 ; Divide the tota
+                                                            l by 4
+   17 00000020         
+   18 00000020 E7FE    Stop    B                Stop
+   19 00000022         
+                       
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SimpleAdd 00000000
+
+Symbol: SimpleAdd
+   Definitions
+      At line 4 in file main.s
+   Uses
+      None
+Comment: SimpleAdd unused
+Stop 00000020
+
+Symbol: Stop
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 5 in file main.s
+Comment: __main used once
+3 symbols
+338 symbols in table

@@ -1,0 +1,129 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;The problem once again is P = Q + R + S. As before, Q =
+                        2, R = 4, S = 5 and we assume that r1 = Q, r2 = R, r3 =
+                        S.
+    2 00000000         ;In this case, we will put the data in memory as constan
+                       ts before the program runs. We first use the load regist
+                       er,
+    3 00000000         ;LDR r1,Q instruction to load register r1 with the conte
+                       nts of memory location Q. This instruction does not exis
+                       t and is
+    4 00000000         ;not part of the ARM’s instruction set. However, the ARM
+                        assembler automatically changes it into an actual instr
+                       uction.
+    5 00000000         ;We call LDR r1,Q a pseudoinstruction because it behaves
+                        like a real instruction. It is indented to make the lif
+                       e of a
+    6 00000000         ;programmer happier by providing a shortcut.
+    7 00000000         
+    8 00000000         
+    9 00000000         
+   10 00000000                 AREA             SimpleAdd, CODE, READONLY
+   11 00000000                 EXPORT           __main
+   12 00000000         
+   13 00000000         
+   14 00000000         __main
+   15 00000000 4904            LDR              R1,Q        ;Load R1 with Q
+   16 00000002 4A05            LDR              R2,R        ;Load R2 with R
+   17 00000004 4B05            LDR              R3,S        ;Load R3 with S
+   18 00000006 EB01 0002       ADD              R0,R1,R2
+   19 0000000A 4418            ADD              R0,R0,R3
+   20 0000000C E7FE    Stop    B                Stop
+   21 0000000E         
+   22 0000000E         
+   23 0000000E                 AREA             SimpleAdd, DATA,READONLY
+   24 0000000E 00 00 00 
+              00       P       SPACE            4           ;Reserve 4 bytes of
+                                                             memory
+   25 00000012         
+   26 00000012         ;means ‘call the current line Q and store the word 
+   27 00000012         ;0x00000002 at that location.
+   28 00000012 00 00 00000002 
+                       Q       DCD              2           ;create variable Q 
+                                                            with initial value 
+                                                            2
+   29 00000018 00000004 
+                       R       DCD              4           ;create variable R 
+                                                            with initial value 
+                                                            4
+   30 0000001C 00000005 
+                       S       DCD              5           ;create variable S 
+                                                            with initial value 
+                                                            5
+   31 00000020         
+   32 00000020                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32f4 -IC:\Keil_
+v5\V518a\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\V518a\ARM\PACK\Kei
+l\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+P 0000000E
+
+Symbol: P
+   Definitions
+      At line 24 in file main.s
+   Uses
+      None
+Comment: P unused
+Q 00000014
+
+Symbol: Q
+   Definitions
+      At line 28 in file main.s
+   Uses
+      At line 15 in file main.s
+Comment: Q used once
+R 00000018
+
+Symbol: R
+   Definitions
+      At line 29 in file main.s
+   Uses
+      At line 16 in file main.s
+Comment: R used once
+S 0000001C
+
+Symbol: S
+   Definitions
+      At line 30 in file main.s
+   Uses
+      At line 17 in file main.s
+Comment: S used once
+SimpleAdd 00000000
+
+Symbol: SimpleAdd
+   Definitions
+      At line 10 in file main.s
+   Uses
+      None
+Comment: SimpleAdd unused
+Stop 0000000C
+
+Symbol: Stop
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 20 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 11 in file main.s
+Comment: __main used once
+7 symbols
+342 symbols in table

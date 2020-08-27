@@ -1,0 +1,315 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000 40023800 
+                       RCC_BASE
+                               EQU              0x40023800
+    2 00000000 00000030 
+                       AHB1ENR_OFFSET
+                               EQU              0x30
+    3 00000000 40023830 
+                       RCC_AHB1ENR
+                               EQU              RCC_BASE + AHB1ENR_OFFSET
+    4 00000000         
+    5 00000000 40020000 
+                       GPIOA_BASE
+                               EQU              0x40020000
+    6 00000000 00000000 
+                       GPIOA_MODER_OFFSET
+                               EQU              0x00
+    7 00000000 40020000 
+                       GPIOA_MODER
+                               EQU              GPIOA_BASE + GPIOA_MODER_OFFSET
+    8 00000000         
+    9 00000000 00000014 
+                       GPIOA_ODR_OFFSET
+                               EQU              0x14
+   10 00000000 40020014 
+                       GPIOA_ODR
+                               EQU              GPIOA_BASE +  GPIOA_ODR_OFFSET
+   11 00000000         
+   12 00000000 00000001 
+                       GPIOA_EN
+                               EQU              1<<0
+   13 00000000 00000400 
+                       MODER5_OUT
+                               EQU              1<<10
+   14 00000000         
+   15 00000000 00000020 
+                       LED_ON  EQU              1<<5
+   16 00000000 00000000 
+                       LED_OFF EQU              0<<5
+   17 00000000         
+   18 00000000         
+   19 00000000                 AREA             |.text|,CODE,READONLY,ALIGN=2
+   20 00000000                 THUMB
+   21 00000000                 ENTRY
+   22 00000000                 EXPORT           __main
+   23 00000000         
+   24 00000000         
+   25 00000000         __main
+   26 00000000 F000 F800       BL               GPIOA_Init
+   27 00000004         
+   28 00000004         
+   29 00000004         
+   30 00000004         
+   31 00000004 00516155 
+                       ONESEC  EQU              5333333
+   32 00000004 000411AB 
+                       HSEC    EQU              266667
+   33 00000004         
+   34 00000004         
+   35 00000004         GPIOA_Init
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   36 00000004         
+   37 00000004         ;RCC->AHBIENR |= GPIOA_EN
+   38 00000004         
+   39 00000004         ;Load address of RCC_AHB1ENR to r0
+   40 00000004 480D            LDR              R0,=RCC_AHB1ENR
+   41 00000006         ;Load value at adress found in r0 into r1
+   42 00000006 6801            LDR              R1,[R0]
+   43 00000008 F041 0101       ORR              R1,#GPIOA_EN
+   44 0000000C         ;Store the content in R1 at address found in R0
+   45 0000000C 6001            STR              R1,[R0]
+   46 0000000E         
+   47 0000000E         ;GPIOA->MODER | = MODER5_OUT
+   48 0000000E 480C            LDR              R0,=GPIOA_MODER
+   49 00000010 6801            LDR              R1,[R0]
+   50 00000012 F441 6180       ORR              R1,#MODER5_OUT
+   51 00000016 6001            STR              R1,[R0]
+   52 00000018         
+   53 00000018         
+   54 00000018 4A0A            LDR              R2,=GPIOA_ODR
+   55 0000001A         
+   56 0000001A         Blink
+   57 0000001A F04F 0120       MOV              R1,#LED_ON
+   58 0000001E 6011            STR              R1,[R2]
+   59 00000020 4B09            LDR              R3,=ONESEC
+   60 00000022 F000 F807       BL               Delay
+   61 00000026         
+   62 00000026 F04F 0100       MOV              R1,#LED_OFF
+   63 0000002A 6011            STR              R1,[R2]
+   64 0000002C 4B06            LDR              R3,=ONESEC
+   65 0000002E F000 F801       BL               Delay
+   66 00000032         
+   67 00000032 E7F2            B                Blink
+   68 00000034         
+   69 00000034         
+   70 00000034         
+   71 00000034         
+   72 00000034         
+   73 00000034         
+   74 00000034         
+   75 00000034         Delay
+   76 00000034 1E5B            SUBS             R3,R3,#1
+   77 00000036 D1FD            BNE              Delay
+   78 00000038 4770            BX               LR
+   79 0000003A         
+   80 0000003A         
+   81 0000003A         
+   82 0000003A         
+   83 0000003A         
+   84 0000003A 00 00           ALIGN
+   85 0000003C                 END
+              40023830 
+              40020000 
+              40020014 
+              00516155 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_stm32 -IC:\Users\I
+srael\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\Isr
+ael\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\S
+TM32F4xx\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SET
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+A 528" --predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\lis
+tings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 19 in file main.s
+   Uses
+      None
+Comment: .text unused
+Blink 0000001A
+
+Symbol: Blink
+   Definitions
+      At line 56 in file main.s
+   Uses
+      At line 67 in file main.s
+Comment: Blink used once
+Delay 00000034
+
+Symbol: Delay
+   Definitions
+      At line 75 in file main.s
+   Uses
+      At line 60 in file main.s
+      At line 65 in file main.s
+      At line 77 in file main.s
+
+GPIOA_Init 00000004
+
+Symbol: GPIOA_Init
+   Definitions
+      At line 35 in file main.s
+   Uses
+      At line 26 in file main.s
+Comment: GPIOA_Init used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 22 in file main.s
+Comment: __main used once
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+AHB1ENR_OFFSET 00000030
+
+Symbol: AHB1ENR_OFFSET
+   Definitions
+      At line 2 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: AHB1ENR_OFFSET used once
+GPIOA_BASE 40020000
+
+Symbol: GPIOA_BASE
+   Definitions
+      At line 5 in file main.s
+   Uses
+      At line 7 in file main.s
+      At line 10 in file main.s
+
+GPIOA_EN 00000001
+
+Symbol: GPIOA_EN
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 43 in file main.s
+Comment: GPIOA_EN used once
+GPIOA_MODER 40020000
+
+Symbol: GPIOA_MODER
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 48 in file main.s
+Comment: GPIOA_MODER used once
+GPIOA_MODER_OFFSET 00000000
+
+Symbol: GPIOA_MODER_OFFSET
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 7 in file main.s
+Comment: GPIOA_MODER_OFFSET used once
+GPIOA_ODR 40020014
+
+Symbol: GPIOA_ODR
+   Definitions
+      At line 10 in file main.s
+   Uses
+      At line 54 in file main.s
+Comment: GPIOA_ODR used once
+GPIOA_ODR_OFFSET 00000014
+
+Symbol: GPIOA_ODR_OFFSET
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 10 in file main.s
+Comment: GPIOA_ODR_OFFSET used once
+HSEC 000411AB
+
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+Symbol: HSEC
+   Definitions
+      At line 32 in file main.s
+   Uses
+      None
+Comment: HSEC unused
+LED_OFF 00000000
+
+Symbol: LED_OFF
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 62 in file main.s
+Comment: LED_OFF used once
+LED_ON 00000020
+
+Symbol: LED_ON
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 57 in file main.s
+Comment: LED_ON used once
+MODER5_OUT 00000400
+
+Symbol: MODER5_OUT
+   Definitions
+      At line 13 in file main.s
+   Uses
+      At line 50 in file main.s
+Comment: MODER5_OUT used once
+ONESEC 00516155
+
+Symbol: ONESEC
+   Definitions
+      At line 31 in file main.s
+   Uses
+      At line 59 in file main.s
+      At line 64 in file main.s
+
+RCC_AHB1ENR 40023830
+
+Symbol: RCC_AHB1ENR
+   Definitions
+      At line 3 in file main.s
+   Uses
+      At line 40 in file main.s
+Comment: RCC_AHB1ENR used once
+RCC_BASE 40023800
+
+Symbol: RCC_BASE
+   Definitions
+      At line 1 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: RCC_BASE used once
+14 symbols
+356 symbols in table

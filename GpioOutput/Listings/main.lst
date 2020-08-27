@@ -1,0 +1,315 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;SW_2 :PF0
+    2 00000000         ;LED_R : PF1
+    3 00000000         ;LED_B : PF2
+    4 00000000         ;LED_G : PF3
+    5 00000000         ;SW_1   :PF4
+    6 00000000         
+    7 00000000         
+    8 00000000 400FE000 
+                       SYSCTL_BASE
+                               EQU              0x400FE000
+    9 00000000 00000608 
+                       RCGCGPIO_OFFSET
+                               EQU              0x608
+   10 00000000 400FE608 
+                       SYSCTL_RCGCGPIO_R
+                               EQU              SYSCTL_BASE + RCGCGPIO_OFFSET
+   11 00000000         
+   12 00000000 40025000 
+                       GPIOF_BASE
+                               EQU              0x40025000
+   13 00000000         
+   14 00000000 00000400 
+                       GPIOF_DIR_OFFSET
+                               EQU              0x400
+   15 00000000 40025400 
+                       GPIOF_DIR_R
+                               EQU              GPIOF_BASE + GPIOF_DIR_OFFSET
+   16 00000000         
+   17 00000000 000003FC 
+                       GPIOF_DATA_OFFSET
+                               EQU              0x3FC
+   18 00000000 400253FC 
+                       GPIOF_DATA_R
+                               EQU              GPIOF_BASE + GPIOF_DATA_OFFSET
+   19 00000000         
+   20 00000000 0000051C 
+                       GPIOF_DEN_OFFSET
+                               EQU              0x51C
+   21 00000000 4002551C 
+                       GPIOF_DEN_R
+                               EQU              GPIOF_BASE + GPIOF_DEN_OFFSET
+   22 00000000         
+   23 00000000 00000020 
+                       GPIOF_EN
+                               EQU              1<<5
+   24 00000000 00000002 
+                       LED_RED EQU              1<<1
+   25 00000000 00000004 
+                       LED_BLUE
+                               EQU              1<<2
+   26 00000000 00000008 
+                       LED_GREEN
+                               EQU              1<<3
+   27 00000000         
+   28 00000000         
+   29 00000000         
+   30 00000000                 AREA             |.text|,CODE,READONLY,ALIGN=2
+   31 00000000                 THUMB
+   32 00000000                 ENTRY
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   33 00000000                 EXPORT           __main
+   34 00000000         
+   35 00000000         
+   36 00000000         
+   37 00000000         __main
+   38 00000000         
+   39 00000000 F000 F803       BL               GPIO_Init
+   40 00000004         
+   41 00000004         loop
+   42 00000004 F000 F813       BL               LED_On
+   43 00000008 E7FC            B                loop
+   44 0000000A         
+   45 0000000A         
+   46 0000000A         
+   47 0000000A         GPIO_Init
+   48 0000000A         ;Enable clock access to PORTF
+   49 0000000A         ;SYSCTL->RCGCGPIO |= GPIOF_EN
+   50 0000000A 490B            LDR              R1,=SYSCTL_RCGCGPIO_R
+   51 0000000C 6808            LDR              R0,[R1]
+   52 0000000E F040 0020       ORR              R0,#GPIOF_EN
+   53 00000012 6008            STR              R0,[R1]
+   54 00000014 BF00            NOP
+   55 00000016 BF00            NOP
+   56 00000018         
+   57 00000018         ;Set PF1 as output
+   58 00000018         ;GPIOF->DIR |=  LED_RED  = 0x02 =  1 << 1 =  0B 0000 001
+                       0
+   59 00000018 4908            LDR              R1,=GPIOF_DIR_R
+   60 0000001A 6808            LDR              R0,[R1]
+   61 0000001C F040 0002       ORR              R0,#LED_RED
+   62 00000020 6008            STR              R0,[R1]
+   63 00000022         
+   64 00000022         ;Digitally enable PF1
+   65 00000022         ;GPIOF->DEN |=LED_RED
+   66 00000022 4907            LDR              R1,=GPIOF_DEN_R
+   67 00000024 6808            LDR              R0,[R1]
+   68 00000026 F040 0002       ORR              R0,#LED_RED
+   69 0000002A 6008            STR              R0,[R1]
+   70 0000002C         
+   71 0000002C 4770            BX               LR
+   72 0000002E         
+   73 0000002E         LED_On
+   74 0000002E         ;GPIOF->DATA =LED_RED
+   75 0000002E         
+   76 0000002E 4905            LDR              R1,=GPIOF_DATA_R
+   77 00000030 F04F 0002       MOV              R0,#LED_RED
+   78 00000034 6008            STR              R0,[R1]
+   79 00000036 4770            BX               LR
+   80 00000038         
+   81 00000038                 ALIGN
+   82 00000038                 END
+              400FE608 
+              40025400 
+              4002551C 
+              400253FC 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_tm4c -IC:\Users\Is
+rael\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\Isra
+el\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123 --predefi
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+ne="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 528" --predefine="_RTE_ 
+SETA 1" --predefine="TM4C1230H6PM SETA 1" --list=.\listings\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 30 in file main.s
+   Uses
+      None
+Comment: .text unused
+GPIO_Init 0000000A
+
+Symbol: GPIO_Init
+   Definitions
+      At line 47 in file main.s
+   Uses
+      At line 39 in file main.s
+Comment: GPIO_Init used once
+LED_On 0000002E
+
+Symbol: LED_On
+   Definitions
+      At line 73 in file main.s
+   Uses
+      At line 42 in file main.s
+Comment: LED_On used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 37 in file main.s
+   Uses
+      At line 33 in file main.s
+Comment: __main used once
+loop 00000004
+
+Symbol: loop
+   Definitions
+      At line 41 in file main.s
+   Uses
+      At line 43 in file main.s
+Comment: loop used once
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIOF_BASE 40025000
+
+Symbol: GPIOF_BASE
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 15 in file main.s
+      At line 18 in file main.s
+      At line 21 in file main.s
+
+GPIOF_DATA_OFFSET 000003FC
+
+Symbol: GPIOF_DATA_OFFSET
+   Definitions
+      At line 17 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: GPIOF_DATA_OFFSET used once
+GPIOF_DATA_R 400253FC
+
+Symbol: GPIOF_DATA_R
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 76 in file main.s
+Comment: GPIOF_DATA_R used once
+GPIOF_DEN_OFFSET 0000051C
+
+Symbol: GPIOF_DEN_OFFSET
+   Definitions
+      At line 20 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: GPIOF_DEN_OFFSET used once
+GPIOF_DEN_R 4002551C
+
+Symbol: GPIOF_DEN_R
+   Definitions
+      At line 21 in file main.s
+   Uses
+      At line 66 in file main.s
+Comment: GPIOF_DEN_R used once
+GPIOF_DIR_OFFSET 00000400
+
+Symbol: GPIOF_DIR_OFFSET
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 15 in file main.s
+Comment: GPIOF_DIR_OFFSET used once
+GPIOF_DIR_R 40025400
+
+Symbol: GPIOF_DIR_R
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 59 in file main.s
+Comment: GPIOF_DIR_R used once
+GPIOF_EN 00000020
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+
+Symbol: GPIOF_EN
+   Definitions
+      At line 23 in file main.s
+   Uses
+      At line 52 in file main.s
+Comment: GPIOF_EN used once
+LED_BLUE 00000004
+
+Symbol: LED_BLUE
+   Definitions
+      At line 25 in file main.s
+   Uses
+      None
+Comment: LED_BLUE unused
+LED_GREEN 00000008
+
+Symbol: LED_GREEN
+   Definitions
+      At line 26 in file main.s
+   Uses
+      None
+Comment: LED_GREEN unused
+LED_RED 00000002
+
+Symbol: LED_RED
+   Definitions
+      At line 24 in file main.s
+   Uses
+      At line 61 in file main.s
+      At line 68 in file main.s
+      At line 77 in file main.s
+
+RCGCGPIO_OFFSET 00000608
+
+Symbol: RCGCGPIO_OFFSET
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 10 in file main.s
+Comment: RCGCGPIO_OFFSET used once
+SYSCTL_BASE 400FE000
+
+Symbol: SYSCTL_BASE
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 10 in file main.s
+Comment: SYSCTL_BASE used once
+SYSCTL_RCGCGPIO_R 400FE608
+
+Symbol: SYSCTL_RCGCGPIO_R
+   Definitions
+      At line 10 in file main.s
+   Uses
+      At line 50 in file main.s
+Comment: SYSCTL_RCGCGPIO_R used once
+14 symbols
+356 symbols in table

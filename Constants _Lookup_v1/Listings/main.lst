@@ -1,0 +1,83 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             myCode, CODE, READONLY
+    2 00000000                 EXPORT           __main
+    3 00000000                 ENTRY
+    4 00000000         
+    5 00000000         
+    6 00000000         __main
+    7 00000000 480E            LDR              R0,=0xE000ED88
+    8 00000002 6801            LDR              R1,[R0]
+    9 00000004 F441 0170       ORR              R1,R1,#(0xF<<20)
+   10 00000008 6001            STR              R1,[R0]
+   11 0000000A         
+   12 0000000A F20F 0114 
+              F101 0100        ADRL             R1,ConstantTable
+   13 00000012 ED91 1A05       VLDR.F           S2,[R1,#20]
+   14 00000016 EDD1 1A03       VLDR.F           S3,[R1,#12]
+   15 0000001A EE21 2A21       VMUL.F           S4,S2,S3
+   16 0000001E         
+   17 0000001E E7FE    Stop    B                Stop
+   18 00000020         
+   19 00000020         ConstantTable
+   20 00000020 3F800000        DCD              0x3F800000  ;1.0
+   21 00000024 40000000        DCD              0x40000000  ;2.0
+   22 00000028 80000000        DCD              0x80000000  ;-0.0
+   23 0000002C 41200000        DCD              0x41200000  ;10.0
+   24 00000030 42C80000        DCD              0X42C80000  ;100.0
+   25 00000034 40490FDA        DCD              0x40490FDA  ;pi
+   26 00000038 402DF854        DCD              0x402DF854  ;e
+   27 0000003C         
+   28 0000003C                 END
+              E000ED88 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_Cortex-M4 -IC:\Kei
+l_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA
+ 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --
+predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\mai
+n.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ConstantTable 00000020
+
+Symbol: ConstantTable
+   Definitions
+      At line 19 in file main.s
+   Uses
+      At line 12 in file main.s
+Comment: ConstantTable used once
+Stop 0000001E
+
+Symbol: Stop
+   Definitions
+      At line 17 in file main.s
+   Uses
+      At line 17 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 2 in file main.s
+Comment: __main used once
+myCode 00000000
+
+Symbol: myCode
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: myCode unused
+4 symbols
+342 symbols in table

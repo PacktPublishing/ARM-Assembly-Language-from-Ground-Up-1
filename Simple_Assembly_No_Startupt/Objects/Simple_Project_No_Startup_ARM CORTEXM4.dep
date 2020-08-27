@@ -1,0 +1,2 @@
+Dependencies for Project 'Simple_Project_No_Startup', Target 'ARM CORTEXM4': (DO NOT MODIFY !)
+F (.\main.s)(0x5B9A8530)(--cpu Cortex-M4 --li --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_ARM_CORTEXM4-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\Device\ARM\ARMCM4\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "ARMCM4 SETA 1"--list .\listings\main.lst --xref -o .\objects\main.o --depend .\objects\main.d)

@@ -1,0 +1,66 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000        1 
+                       VAL1    RN               R1
+    3 00000000        2 
+                       VAL2    RN               R2
+    4 00000000        3 
+                       SUM     RN               R3
+    5 00000000         
+    6 00000000         
+    7 00000000                 AREA             rn,CODE,READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           __main
+   10 00000000         
+   11 00000000         __main
+   12 00000000 F04F 0125       MOV              VAL1,#0x25
+   13 00000004 F04F 0234       MOV              VAL2,#0x34
+   14 00000008         
+   15 00000008 EB01 0302       ADD              SUM,VAL1,VAL2
+   16 0000000C         
+   17 0000000C E7FE    Stop    B                Stop
+   18 0000000E                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_CortexM4 -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main
+.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 0000000C
+
+Symbol: Stop
+   Definitions
+      At line 17 in file main.s
+   Uses
+      At line 17 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 11 in file main.s
+   Uses
+      At line 9 in file main.s
+Comment: __main used once
+rn 00000000
+
+Symbol: rn
+   Definitions
+      At line 7 in file main.s
+   Uses
+      None
+Comment: rn unused
+3 symbols
+342 symbols in table

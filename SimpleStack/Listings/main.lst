@@ -1,0 +1,63 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             simpleStack,CODE,READONLY
+    2 00000000                 ENTRY
+    3 00000000                 EXPORT           __main
+    4 00000000         
+    5 00000000         
+    6 00000000         __main
+    7 00000000 4B03            LDR              R3,=0xDEADBEEF
+    8 00000002 4C04            LDR              R4,=0xBABEFACE
+    9 00000004 B408            PUSH             {R3}
+   10 00000006 B410            PUSH             {R4}
+   11 00000008 BC20            POP              {R5}
+   12 0000000A BC40            POP              {R6}
+   13 0000000C         
+   14 0000000C E7FE    Stop    B                Stop
+   15 0000000E 00 00           ALIGN
+   16 00000010                 END
+              DEADBEEF 
+              BABEFACE 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\main.d -o.\objects\main.o -I.\RTE\_CortexM4 -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 
+1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" --list=.\listings\main
+.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Stop 0000000C
+
+Symbol: Stop
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: Stop used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: __main used once
+simpleStack 00000000
+
+Symbol: simpleStack
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: simpleStack unused
+3 symbols
+341 symbols in table
